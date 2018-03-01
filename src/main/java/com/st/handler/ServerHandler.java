@@ -34,7 +34,7 @@ public class ServerHandler extends ChannelHandlerAdapter{
 //        byte[] req = new byte[buf.readableBytes()];
 //        buf.readBytes(req);
 //        String translation = new String(req,"UTF-8");
-        //想一下为啥这边没有打印出 #
+        //想一下为啥这边没有打印出 井号
         System.out.println("receive: "+msg);
         if(msg .equals("exit")){
             ctx.writeAndFlush(Unpooled.copiedBuffer(("ByeBye#").getBytes())).addListener(ChannelFutureListener.CLOSE);
