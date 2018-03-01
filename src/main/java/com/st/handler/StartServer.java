@@ -11,6 +11,7 @@ import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
 import io.netty.handler.codec.DelimiterBasedFrameDecoder;
+import io.netty.handler.codec.FixedLengthFrameDecoder;
 import io.netty.handler.codec.string.StringDecoder;
 
 import java.nio.charset.Charset;
@@ -36,8 +37,8 @@ public class StartServer {
                     @Override
                     protected void initChannel(SocketChannel socketChannel) throws Exception {
                         //   #作为其分割符号，
-                        ByteBuf delimiter = Unpooled.copiedBuffer("#".getBytes());
-                        socketChannel.pipeline().addLast(new DelimiterBasedFrameDecoder(1024,delimiter));
+                        // ByteBuf delimiter = Unpooled.copiedBuffer("#".getBytes());
+                        socketChannel.pipeline().addLast(new FixedLengthFrameDecoder(5));
                         //  将发送过来的ByteBuf转化成String,默认为UTF-8
                         socketChannel.pipeline().addLast(new StringDecoder(Charset.forName("UTF-8")));
                         socketChannel.pipeline().addLast(new ServerHandler());

@@ -41,6 +41,7 @@ public class ClientServer {
         Scanner scanner = new Scanner(System.in);
         String line = "";
         while(!(line=scanner.nextLine()).equals("exit")){
+
            channelFuture.channel().writeAndFlush(Unpooled.copiedBuffer((line+"#").getBytes()));
         }
         channelFuture.channel().writeAndFlush(Unpooled.copiedBuffer("exit#".getBytes()));
