@@ -23,10 +23,12 @@ public class ClientHandler extends ChannelHandlerAdapter{
     @Override
     public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
         try {
-            ByteBuf buf = (ByteBuf) msg;
-            byte[] req = new byte[buf.readableBytes()];
-            buf.readBytes(req);
-            System.out.println(new String(req, "UTF-8"));
+
+//            ByteBuf buf = (ByteBuf) msg;
+//            byte[] req = new byte[buf.readableBytes()];
+//            buf.readBytes(req);
+            System.out.println(msg);
+
         }finally {
             ReferenceCountUtil.release(msg);
         }

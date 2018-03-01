@@ -20,7 +20,7 @@ public class ServerHandler extends ChannelHandlerAdapter{
     @Override
     public void channelActive(ChannelHandlerContext ctx) throws Exception {
         System.out.println(ctx.name()+" has connected");
-        ctx.writeAndFlush(Unpooled.copiedBuffer((" Welcome Client "+ ctx.name()).getBytes()));
+        ctx.writeAndFlush(Unpooled.copiedBuffer((" Welcome Client #"+ ctx.name()).getBytes()));
     }
 
     @Override
@@ -30,16 +30,16 @@ public class ServerHandler extends ChannelHandlerAdapter{
 
     @Override
     public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
-        ByteBuf buf = (ByteBuf)msg;
-        byte[] req = new byte[buf.readableBytes()];
-        buf.readBytes(req);
-        String translation = new String(req,"UTF-8");
-        System.out.println("receive: "+translation);
-        if(translation .equals("exit")){
-            ctx.writeAndFlush(Unpooled.copiedBuffer(("ByeBye").getBytes())).addListener(ChannelFutureListener.CLOSE);
+//        ByteBuf buf = (ByteBuf)msg;
+//        byte[] req = new byte[buf.readableBytes()];
+//        buf.readBytes(req);
+//        String translation = new String(req,"UTF-8");
+        System.out.println("receive: "+msg);
+        if(msg .equals("exit")){
+            ctx.writeAndFlush(Unpooled.copiedBuffer(("ByeBye#").getBytes())).addListener(ChannelFutureListener.CLOSE);
         }
 
-        ctx.writeAndFlush(Unpooled.copiedBuffer(("I have receive Your ["+translation+"] , at time:"+new SimpleDateFormat("yyyy.MMMMM.dd hh:mm aaa").format(new Date())).getBytes()));
+        ctx.writeAndFlush(Unpooled.copiedBuffer(("I have receive Your ["+msg+"] , at time:"+new SimpleDateFormat("yyyy.MMMMM.dd hh:mm aaa").format(new Date())+"#").getBytes()));
     }
 
     @Override

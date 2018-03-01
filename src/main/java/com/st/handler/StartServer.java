@@ -13,6 +13,8 @@ import io.netty.channel.socket.nio.NioServerSocketChannel;
 import io.netty.handler.codec.DelimiterBasedFrameDecoder;
 import io.netty.handler.codec.string.StringDecoder;
 
+import java.nio.charset.Charset;
+
 /**
  * Created by bobo on 2018/2/26.
  *
@@ -33,6 +35,11 @@ public class StartServer {
                 .childHandler(new ChannelInitializer<SocketChannel>() {
                     @Override
                     protected void initChannel(SocketChannel socketChannel) throws Exception {
+                        //   #作为其分割符号，
+                        ByteBuf delimiter = Unpooled.copiedBuffer("#".getBytes());
+                        socketChannel.pipeline().addLast(new DelimiterBasedFrameDecoder(1024,delimiter));
+                        //  将发送过来的ByteBuf转化成String,默认为UTF-8
+                        socketChannel.pipeline().addLast(new StringDecoder(Charset.forName("UTF-8")));
                         socketChannel.pipeline().addLast(new ServerHandler());
                     }
                 });
